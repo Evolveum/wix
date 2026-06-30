@@ -10,6 +10,7 @@
 @if /i "%1"=="inc" set _SuppressWixClean=true
 @if not "%1"=="" shift & goto parse_args
 
+%~dp0..\..\build\wix\%_C%\publish\wix\wix.exe eula accept wix0
 msbuild ext_t.proj -p:Configuration=%_C% -p:SuppressWixClean=%_SuppressWixClean% -m -tl -nologo -warnaserror -bl:%_L%\ext_build.binlog || exit /b
 
 @popd

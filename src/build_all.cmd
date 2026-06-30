@@ -43,6 +43,8 @@ call burn\burn.cmd %_C% || exit /b
 
 call wix\wix.cmd %_C% || exit /b
 
+:: Accept EULA for locally built wix.exe before building extensions
+..\build\wix\%_C%\publish\wix\wix.exe eula accept wix0
 
 :: tools
 
