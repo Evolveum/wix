@@ -30,6 +30,7 @@
     <NuGetAudit>false</NuGetAudit> <!-- temporary -->
     <NuGetAuditMode>all</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
+    <AcceptEula>wix7</AcceptEula> <!-- We are not using the binaries, so this is OK. -->
   </PropertyGroup>
 
   <PropertyGroup>
