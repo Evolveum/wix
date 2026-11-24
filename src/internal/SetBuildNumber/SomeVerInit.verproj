@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) .NET Foundation and contributors. All rights reserved. Licensed under the Microsoft Reciprocal License. See LICENSE.TXT file in the project root for full license information. -->
 
-<Project Sdk="SomeVer/0.1.1">
+<Project>
+  <Import Project="Sdk.props" Sdk="SomeVer" Version="0.1.1" />
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 
@@ -28,5 +30,36 @@
     <VersionTemplate Include="SomeVerInfo.rc.pp" OutputPath="$(SomeVerInfoRcFile)" />
     <VersionTemplate Include="SomeVerInfo.props.pp" OutputPath="$(SomeVerInfoPropsFile)" />
   </ItemGroup>
+
+  <Import Project="Sdk.targets" Sdk="SomeVer" Version="0.1.1" />
+
+  <!-- Version templates also depend on Git state, not just the template timestamps. -->
+  <Target Name="SomeVerApplyVersionTemplates"
+          Outputs="%(VersionTemplate.OutputPath)"
+          Condition="'$(DesignTimeBuild)' != 'true' and '$(SomeVerSkip)' != 'true'">
+    <PropertyGroup>
+      <VersionTemplateText>$([System.IO.File]::ReadAllText('%(VersionTemplate.Identity)'))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{fileversion}', $(FileVersion)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{assemblyversion}', $(AssemblyVersion)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{informationalversion}', $(InformationalVersion)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{packageversion}', $(PackageVersion)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{nextmajor}', $(SomeVerNextMajor)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{nextminor}', $(SomeVerNextMinor)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{major}', $(SomeVerMajor)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{minor}', $(SomeVerMinor)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{patch}', $(SomeVerPatch)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{label}', $(SomeVerLabel)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{dashlabel}', $(SomeVerDashLabel)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{height}', $(SomeVerHeight)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{fullheight}', $(SomeVerFullHeight)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{sha}', $(SomeVerSha)))</VersionTemplateText>
+      <VersionTemplateText>$(VersionTemplateText.Replace('{shortsha}', $(SomeVerShortSha)))</VersionTemplateText>
+    </PropertyGroup>
+
+    <WriteLinesToFile File="%(VersionTemplate.OutputPath)"
+                      Lines="$(VersionTemplateText)"
+                      Overwrite="true"
+                      WriteOnlyWhenDifferent="true" />
+  </Target>
 
 </Project>
