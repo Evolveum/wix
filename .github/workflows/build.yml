@@ -26,8 +26,8 @@ jobs:
       SignBuild: ${{ github.repository_owner == 'wixtoolset' && startsWith(github.ref, 'refs/tags/v') }}
       WixOfficialBuild: ${{ github.repository_owner == 'wixtoolset' && startsWith(github.ref, 'refs/tags/v') }}
     permissions:
+      contents: read
       packages: write
-      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -107,5 +107,12 @@ jobs:
           path: build/logs/
 
       - name: Push to GitHub Packages
-        if: ${{ github.event_name == 'push' && github.repository_owner == 'wixtoolset' && (env.WixOfficialBuild == 'true' || github.ref == 'refs/heads/main') }}
-        run: dotnet nuget push "build/artifacts/**/*.nupkg" --source https://nuget.pkg.github.com/wixtoolset/index.json --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        shell: pwsh
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          dotnet nuget push "build/artifacts/**/*.nupkg" `
+            --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" `
+            --api-key "$env:NUGET_AUTH_TOKEN" `
+            --skip-duplicate
