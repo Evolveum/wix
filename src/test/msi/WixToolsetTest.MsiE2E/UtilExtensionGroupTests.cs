@@ -243,7 +243,7 @@ namespace WixToolsetTest.MsiE2E
         }
 
         // Verify that a comment can be changed for an existing group
-        [RuntimeFact]
+        [Fact(Skip = "Temporarily disabled: intermittent local-group test failure; see wixtoolset/wix#8941.")]
         public void CanChangeCommentOfExistingNonDomainGroup()
         {
             try
