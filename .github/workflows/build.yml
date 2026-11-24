@@ -3,7 +3,7 @@ name: Build WiX Toolset v7
 on:
   push:
     branches:
-      - main
+      - v7
     tags:
       - v**
   pull_request:
