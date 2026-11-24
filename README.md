@@ -1,15 +1,16 @@
 ![The WiX Toolset Logo](https://github.com/wixtoolset/.github/raw/master/profile/images/readme-header.png)
 
-[![latest version](https://img.shields.io/nuget/vpre/wix)](https://www.nuget.org/packages/wix)
-[![download count](https://img.shields.io/nuget/dt/wix)](https://www.nuget.org/stats/packages/WiX?groupby=Version)
-[![build status](https://img.shields.io/github/actions/workflow/status/wixtoolset/wix/build.yml?branch=main)](https://github.com/wixtoolset/wix/actions/workflows/build.yml?query=branch%3Amain)
-
 # WiX Toolset
 
 The WiX Toolset is the most powerful set of tools available to create your Windows installation experience. This repository contains the WiX Toolset code itself.
 
 If you're new to WiX, check out our [Quick Start](https://docs.firegiant.com/quick-start/) to build your first installation package in just a few minutes.
 
+## Evolveum Fork
+
+This repository contains a fork of WiX Toolset by Evolveum. Its goal is to provide a custom build of WiX Toolset. The build is currently done against `v7` branch.
+
+**The rest of this README file is the original content from the upstream GitHub repository.**
 
 ## Open Source Maintenance Fee
 
